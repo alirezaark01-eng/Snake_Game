@@ -146,6 +146,7 @@ void Draw() {
                 bool print = false;
                 
                 for (int k = 0; k < nTail; k++) {
+                    
                     if (tailX[k] == j && tailY[k] == i) {
                         SetColor(10); // Green
                         cout << "o";
@@ -161,6 +162,7 @@ void Draw() {
                 cout << "|";
             }
         }
+        
         cout << endl;
     }
 
@@ -173,4 +175,44 @@ void Draw() {
     cout << "Time: " << (int)difftime(time(0), startTime) << "s   " << endl;
     cout << "Speed Delay: " << (int)gameDelay << "ms   " << endl; 
     cout << "Use \"W_A_S_D\" to move. X to quit." << endl;
+}
+
+
+
+enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
+extern eDirection dir;
+
+void Input() {
+
+    if (_kbhit()) {
+        char current = _getch();
+        
+        switch (current) {
+        case 'a':
+        case 'A':
+            if (dir != RIGHT) dir = LEFT;
+            break;
+            
+        case 'd':
+        case 'D':
+            if (dir != LEFT) dir = RIGHT;
+            break;
+            
+        case 'w':
+        case 'W':
+            if (dir != DOWN) dir = UP;
+            break;
+            
+        case 's': 
+        case 'S':
+            if (dir != UP) dir = DOWN;
+            break;
+            
+        case 'x':
+        case 'X':
+            gameOver = true;
+            break;
+            
+        }
+    }
 }
