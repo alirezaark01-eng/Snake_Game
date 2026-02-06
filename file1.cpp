@@ -49,3 +49,47 @@ void HideCursor() {
     info.bVisible = FALSE;
     SetConsoleCursorInfo(consoleHandle, &info);
 }
+
+
+
+void SaveScore() {
+    ofstream file("snake_scores.txt", ios::app);
+    if (file.is_open()) {
+        file << currentPlayerName << " " << score << endl;
+        file.close();
+    }
+}
+
+void ShowScoreboard() {
+    ifstream file("snake_scores.txt");
+    Player players[100]; // Array to hold scores loaded from file
+    int count = 0;
+
+    if (file.is_open()) {
+        while (count < 100 && file >> players[count].name >> players[count].score) {
+            count++;
+        }
+        file.close();
+    }
+
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (players[j].score < players[j + 1].score) {
+                Player temp = players[j];
+                players[j] = players[j + 1];
+                players[j + 1] = temp;
+            }
+        }
+    }
+
+    SetColor(14); // Yellow
+    cout << "\n======= HIGH SCORES =======\n";
+    if (count == 0) {
+        cout << "No scores saved yet.\n";
+    }
+    for (int i = 0; i < count && i < 10; i++) { 
+        cout << (i + 1) << ". " << players[i].name << " - " << players[i].score << endl;
+    }
+    cout << "===========================\n";
+    SetColor(7); // Reset to White
+}
