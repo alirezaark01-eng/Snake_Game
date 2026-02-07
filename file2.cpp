@@ -212,7 +212,78 @@ void Input() {
         case 'X':
             gameOver = true;
             break;
+
+            
             
         }
     }
+}
+
+
+int main() {
+    bool appRunning = true;
+
+    system("cls");
+    cout << "Enter your name: ";
+    cin >> currentPlayerName;
+
+    while (appRunning) {
+        Setup(); 
+        
+        auto lastTime = std::chrono::steady_clock::now();
+
+    
+        while (!gameOver) {
+            auto currentTime = std::chrono::steady_clock::now();
+            auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count();
+
+
+            Input();
+
+    
+            if (elapsedTime > gameDelay) {
+                Logic();
+                Draw();
+                lastTime = currentTime;
+            }
+            Sleep(1); 
+        }
+
+
+        system("cls");
+        Beep(300,35);
+        SetColor(12); // Red
+        cout << "          YOU LOST!               " << endl;
+        SetColor(7); // White
+        cout << "      Final Score: " << score << "      " << endl;
+
+
+        SaveScore();
+        ShowScoreboard();
+        
+        cout << "\n Press 'R' to Retry, 'X' to Quit  " << endl;
+
+
+        
+        bool waitingForInput = true;
+        
+        while (waitingForInput) {
+            
+            if (_kbhit()) {
+                char ch = _getch();
+                if (ch == 'r' || ch == 'R') {
+                    system("cls"); 
+                    waitingForInput = false;
+            
+                }
+                else if (ch == 'x' || ch == 'X') {
+                    waitingForInput = false;
+                    appRunning = false; 
+                }
+            }
+            Sleep(10);
+        }
+    }
+
+    return 0;
 }
