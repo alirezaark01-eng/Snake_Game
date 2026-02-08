@@ -17,16 +17,21 @@ struct Player {
 const int width = 20;
 const int height = 20;
 
-extern bool gameOver;
-extern int x, y;
-extern int fruitX, fruitY;
-extern int score;
-extern int tailX[1000];
-extern int tailY[1000];
-extern int nTail;
-extern time_t startTime;
-extern string currentPlayerName;
-extern double gameDelay;
+
+bool gameOver;
+int x, y;
+int fruitX, fruitY;
+int score;
+int tailX[1000];
+int tailY[1000];
+int nTail;
+time_t startTime;
+string currentPlayerName;
+
+double gameDelay = 200.0; 
+
+enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
+eDirection dir;
 
 
 
