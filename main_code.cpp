@@ -30,9 +30,6 @@ string currentPlayerName;
 
 double gameDelay = 200.0; 
 
-enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
-eDirection dir;
-
 
 
 // Sets the text color in the console (7=White, 10=Green, 12=Red, 14=Yellow)
